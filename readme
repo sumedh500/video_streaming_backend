@@ -1,0 +1,41 @@
+1.create a docker container
+2.create a video folder and paste one video in video folder
+3.spin the container by this command (docker run -it -v "D:/video streaming/docker_backend/video:/home/app/videos" video_streaming) 
+4.-v command is for volumn the command save the video folder in docker container and video_streaming is the name of image
+5.now check that video folder is display in docker by ls command
+6.now inside video folder make one dir as outputs
+7.now run this command to create segments (ffmpeg -i sample.mp4 -codec:v libx264 -codec:a aac -hls_time 10 -hls_playlist_type vod -hls_segment_filename outputs/segment%03d.ts -start_number 0 outputs/index.m3u8)
+8.in this command ffmpeg take the video from path and store the segments in outputs folder
+
+9.policy json for S3
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Statement1",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::hls.sumedh.dev/*"
+        }
+    ]
+}
+
+10.CORS json for S3
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": []
+    }
+]
