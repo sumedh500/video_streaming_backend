@@ -39,3 +39,10 @@
         "ExposeHeaders": []
     }
 ]
+
+
+
+
+
+this is command to convert video to segments according to quality
+ffmpeg -i uploads/1732554599385.mp4 -filter_complex "[0:v]split=4[low][mid][high][ultra]" -map "[low]" -s 640x360 -c:v libx264 -b:v 800k -c:a aac -ac 2 -ar 44100 -hls_time 10 -hls_segment_filename "outputs/360p/segment%03d.ts" -start_number 0 "outputs/360p/index.m3u8" -map "[mid]" -s 854x480 -c:v libx264 -b:v 1200k -c:a aac -ac 2 -ar 44100 -hls_time 10 -hls_segment_filename "outputs/480p/segment%03d.ts" -start_number 0 "outputs/480p/index.m3u8" -map "[high]" -s 1280x720 -c:v libx264 -b:v 2500k -c:a aac -ac 2 -ar 44100 -hls_time 10 -hls_segment_filename "outputs/720p/segment%03d.ts" -start_number 0 "outputs/720p/index.m3u8" -map "[ultra]" -s 1920x1080 -c:v libx264 -b:v 5000k -c:a aac -ac 2 -ar 44100 -hls_time 10 -hls_segment_filename "outputs/1080p/segment%03d.ts" -start_number 0 "outputs/1080p/index.m3u8"
